@@ -1,8 +1,9 @@
-import { Exclude } from "class-transformer";
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { BeforeInsert, BeforeUpdate, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+
 
 @Entity('users')
 export class User {
+    
     @PrimaryGeneratedColumn('uuid')
     id: string;
 
@@ -11,7 +12,6 @@ export class User {
     })
     email: string;
 
-    // @Exclude()
     @Column('text', {
         select: false
     })
@@ -20,21 +20,31 @@ export class User {
     @Column('text')
     fullName: string;
 
-    // @Exclude()
-    @Column('decimal', { 
-        default: 1500 
-    }) 
-    balance: number;
-
     @Column('bool', {
         default: true
     })
     isActive: boolean;
 
-    // @Exclude()
+    @Column('decimal', {
+        default: 1500
+    })
+    balance: number;
+
     @Column('text', {
         array: true,
         default: ['user']
     })
     roles: string[];
+
+    @BeforeInsert()
+    checkEmailBeforeInser(){
+        this.email = this.email.toLocaleLowerCase().trim()
+    }
+
+    @BeforeUpdate()
+    checkEmailBeforeUpdate(){
+        this.checkEmailBeforeInser();
+    }
+
+
 }
