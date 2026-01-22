@@ -1,4 +1,5 @@
-import { BeforeInsert, BeforeUpdate, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { BeforeInsert, BeforeUpdate, Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Transfer } from 'src/transfers/entities/transfer.entity';
 
 
 @Entity('users')
@@ -25,16 +26,33 @@ export class User {
     })
     isActive: boolean;
 
-    @Column('decimal', {
-        default: 1500
+    @Column({ 
+        type: 'numeric', 
+        precision: 10, 
+        scale: 2, 
+        default: '1500.00' 
     })
-    balance: number;
+    balance: string;
 
     @Column('text', {
         array: true,
         default: ['user']
     })
     roles: string[];
+
+
+    @OneToMany(
+        () => Transfer,
+        ( transfer ) => transfer.sender
+    )
+    senderTransfer: Transfer [];
+
+    @OneToMany(
+        () => Transfer, 
+        ( transfer ) => transfer.receiver
+    )
+    receivedTransfers: Transfer[];
+
 
     @BeforeInsert()
     checkEmailBeforeInser(){
@@ -45,6 +63,5 @@ export class User {
     checkEmailBeforeUpdate(){
         this.checkEmailBeforeInser();
     }
-
 
 }

@@ -20,6 +20,7 @@ export class AuthService {
     
     async create( createUserDto: CreateUserDto) {
         try {
+            
             const { password, ...userData } = createUserDto;
 
             const user = this.userRepository.create({
@@ -45,6 +46,7 @@ export class AuthService {
     }
 
     async login( loginUserDto: LoginUserDto ) {
+
         const { password, email } = loginUserDto;
         const user = await this.userRepository.findOne({
             where: { email },
@@ -80,4 +82,4 @@ export class AuthService {
         throw new InternalServerErrorException('Please check server logs');
     }
 }
-
+ 

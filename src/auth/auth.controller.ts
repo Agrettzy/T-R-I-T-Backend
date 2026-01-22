@@ -31,11 +31,11 @@ export class AuthController {
     ) {
         return {
             ok: true,
-            message: 'Acceso autorizado',
+            message: 'Usuario registrado',
             user
         }
     }
-
+    
     // @Get('private2')
     // @Auth( ValidRoles.admin )
     // testinPrivateRoute2(
@@ -47,6 +47,5 @@ export class AuthController {
     //         user
     //     }
     // }
-    
     
 }
