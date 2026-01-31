@@ -5,7 +5,6 @@
 [circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
 [circleci-url]: https://circleci.com/gh/nestjs/nest
 
-  <!-- entrar al read ctrl + shift + v -->
 
 # Bank API
 
@@ -33,4 +32,5 @@ add -D @types/bcrypt
 add @nestjs/passport passport
 add @nestjs/jwt passport-jwt
 add -D @types/passport-jwt
+npm i nanoid
 ```

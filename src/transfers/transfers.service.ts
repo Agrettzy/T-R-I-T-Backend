@@ -10,6 +10,7 @@ import { Transfer } from './entities/transfer.entity';
 
 @Injectable()
 export class TransfersService {
+    
     constructor(
         @InjectRepository(User) 
         private readonly userRepository: Repository<User>,
@@ -51,7 +52,7 @@ export class TransfersService {
         if ( Number(sender.balance) < amount )           
             throw new BadRequestException('Insufficient balance.');
 
-        const receiver = await this.userRepository.findOneBy({ id: toAccount })
+        const receiver = await this.userRepository.findOneBy({ accountKey: toAccount })
         if( !receiver )
             throw new NotFoundException('Receiver account not found.');
 

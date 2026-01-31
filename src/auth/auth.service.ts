@@ -8,6 +8,11 @@ import * as bcrypt from 'bcrypt';
 import { CreateUserDto, LoginUserDto } from './dto';
 import { User } from './entities/user.entity';
 import { JwtPayload } from './interfaces/jwt-payload.interfaces';
+import { customAlphabet } from 'nanoid';
+import { use } from 'passport';
+
+
+const generateAccountKey = customAlphabet('0123456789', 10);
 
 
 @Injectable()
@@ -22,10 +27,12 @@ export class AuthService {
         try {
             
             const { password, ...userData } = createUserDto;
+            const accountKey = generateAccountKey();
 
             const user = this.userRepository.create({
                 ...userData,
-                password: bcrypt.hashSync(password, 10 )
+                password: bcrypt.hashSync(password, 10 ),
+                accountKey,
             });
 
             await this.userRepository.save( user )
@@ -35,6 +42,8 @@ export class AuthService {
                 token: this.getJwtToken({ 
                     id: user.id,
                     email: user.email,
+                    fullName: user.fullName,
+                    accountKey: user.accountKey,
                     isActivate: user.isActive,
                     roles: user.roles,
                 })
@@ -50,11 +59,12 @@ export class AuthService {
         const { password, email } = loginUserDto;
         const user = await this.userRepository.findOne({
             where: { email },
-            select: { email: true, password: true, id: true }
+            select: { email: true, password: true, id: true, accountKey: true, fullName: true }
         });
 
         if ( !user )
             throw new UnauthorizedException('Credentials not valid, please verify or create an account.')
+        
         if( !bcrypt.compareSync( password, user.password ) )
             throw new UnauthorizedException('Credentials not valid, please verify or create an account.')
         
@@ -63,6 +73,8 @@ export class AuthService {
             token: this.getJwtToken({ 
                 id: user.id,
                 email: user.email,
+                fullName: user.fullName,
+                accountKey: user.accountKey,
                 isActivate: user.isActive,
                 roles: user.roles,
             })

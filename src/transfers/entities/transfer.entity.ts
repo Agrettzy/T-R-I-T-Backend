@@ -8,12 +8,6 @@ export class Transfer {
     @PrimaryGeneratedColumn('uuid')
     id: string;
 
-    // @Column('uuid')
-    // fromAccount: string;
-
-    // @Column('uuid')
-    // toAccount: string;
-
     @Column('decimal', {
         precision: 9,
         scale: 2
@@ -27,7 +21,6 @@ export class Transfer {
 
     @CreateDateColumn() 
     createdAt: Date;
-
 
     @ManyToOne(
         () => User,
@@ -49,4 +42,4 @@ export class Transfer {
     })
     receiver: User;
 
-}
+} 

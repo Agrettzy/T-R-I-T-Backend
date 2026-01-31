@@ -21,8 +21,8 @@ export class UserRoleGuard implements CanActivate {
         const user = req.user as User;
 
 
-        if( !user )
-            throw new UnauthorizedException('Unauthenticated user, please verify your credentials.');
+        // if( !user )
+        //     throw new UnauthorizedException('Unauthenticated user, please verify your credentials.');
 
         if ( !user.isActive )
             throw new ForbiddenException('Inactive account.');

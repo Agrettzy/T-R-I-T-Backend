@@ -31,7 +31,7 @@ import { User } from './entities/user.entity';
                 return {
                 secret: configService.get('JWT_SECRET'),
                 signOptions: {
-                    expiresIn:'2h' //TODO cambiar a 10min
+                    expiresIn:'600s'
                     }
                 }
             }

@@ -2,6 +2,7 @@ import { BeforeInsert, BeforeUpdate, Column, Entity, OneToMany, PrimaryGenerated
 import { Transfer } from 'src/transfers/entities/transfer.entity';
 
 
+
 @Entity('users')
 export class User {
     
@@ -20,6 +21,12 @@ export class User {
 
     @Column('text')
     fullName: string;
+
+    @Column('text', {
+        unique: true,
+        nullable: false
+    })
+    accountKey: string;
 
     @Column('bool', {
         default: true

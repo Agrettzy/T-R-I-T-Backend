@@ -3,6 +3,7 @@ import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthModule } from './auth/auth.module';
 import { TransfersModule } from './transfers/transfers.module';
+import { MeModule } from './me/me.module';
 
 @Module({
     imports: [
@@ -22,6 +23,8 @@ import { TransfersModule } from './transfers/transfers.module';
         AuthModule,
 
         TransfersModule,
+
+        MeModule,
     ],
   
     controllers: [],
