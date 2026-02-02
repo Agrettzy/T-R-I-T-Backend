@@ -4,6 +4,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthModule } from './auth/auth.module';
 import { TransfersModule } from './transfers/transfers.module';
 import { MeModule } from './me/me.module';
+import { SeedModule } from './seed/seed.module';
 
 @Module({
     imports: [
@@ -25,6 +26,8 @@ import { MeModule } from './me/me.module';
         TransfersModule,
 
         MeModule,
+
+        SeedModule,
     ],
   
     controllers: [],
